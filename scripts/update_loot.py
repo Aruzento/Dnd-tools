@@ -2,9 +2,9 @@ from pathlib import Path
 import csv
 import json
 
-BASE_DIR = Path(__file__).resolve().parent
-CSV_FILE = BASE_DIR / "loot.csv"
-JS_FILE = BASE_DIR / "loot-data.js"
+ROOT_DIR = Path(__file__).resolve().parent.parent
+CSV_FILE = ROOT_DIR / "data" / "loot.csv"
+JS_FILE = ROOT_DIR / "data" / "loot-data.js"
 
 COLUMNS = [
     "Предмет",
@@ -29,7 +29,7 @@ def main():
             actual = ";".join(reader.fieldnames or [])
             expected = ";".join(COLUMNS)
             raise SystemExit(
-                f"Неверные колонки loot.csv.\n"
+                f"Неверные колонки data/loot.csv.\n"
                 f"Ожидаются: {expected}\n"
                 f"Получены:  {actual}"
             )
@@ -63,10 +63,11 @@ def main():
             })
 
     if not items:
-        raise SystemExit("В loot.csv нет корректных предметов.")
+        raise SystemExit("В data/loot.csv нет корректных предметов.")
 
     content = (
-        "// AUTO-GENERATED FROM loot.csv. Edit loot.csv and run update_loot.py.\n"
+        "// AUTO-GENERATED FROM data/loot.csv. "
+        "Edit data/loot.csv and run scripts/update_loot.py.\n"
         "const lootTable = "
         + json.dumps(items, ensure_ascii=False, separators=(",", ":"))
         + ";\n"
@@ -75,7 +76,7 @@ def main():
     JS_FILE.write_text(content, encoding="utf-8")
 
     print(f"[OK] Предметов: {len(items)}")
-    print(f"[OK] Обновлён: {JS_FILE.name}")
+    print(f"[OK] Обновлён: {JS_FILE.relative_to(ROOT_DIR)}")
 
 
 if __name__ == "__main__":

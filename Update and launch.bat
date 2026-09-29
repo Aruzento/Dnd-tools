@@ -2,15 +2,15 @@
 cd /d "%~dp0"
 
 echo Updating enemies...
-python update_enemies.py
+python scripts\update_enemies.py
 if errorlevel 1 goto error
 
 echo Updating players...
-python update_players.py
+python scripts\update_players.py
 if errorlevel 1 goto error
 
 echo Updating loot...
-python update_loot.py
+python scripts\update_loot.py
 if errorlevel 1 goto error
 
 echo Opening site...

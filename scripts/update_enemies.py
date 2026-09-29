@@ -3,13 +3,12 @@ import csv
 import json
 import re
 
-BASE_DIR = Path(__file__).resolve().parent
+ROOT_DIR = Path(__file__).resolve().parent.parent
 
-ENEMIES_DIR = BASE_DIR / "enemies"
-CSV_FILE = BASE_DIR / "enemies.csv"
-JS_FILE = BASE_DIR / "enemies.js"
-HTML_FILE = BASE_DIR / "tool-3.html"
-OLD_DETAILS_FILE = BASE_DIR / "enemy-details.js"
+ENEMIES_DIR = ROOT_DIR / "content" / "enemies"
+CSV_FILE = ROOT_DIR / "data" / "enemies.csv"
+JS_FILE = ROOT_DIR / "assets" / "js" / "enemies.js"
+HTML_FILE = ROOT_DIR / "pages" / "tool-3.html"
 
 NAME_RE = re.compile(r"^#\s+(.+?)\s*$", re.MULTILINE)
 HP_RE = re.compile(r"\*\*Хиты:\*\*\s*(\d+)")
@@ -42,7 +41,7 @@ def parse_enemy(path: Path):
     return {
         "Название": name_match.group(1).strip(),
         "Хиты всего": int(hp_match.group(1)),
-        "Файл": f"enemies/{path.name}",
+        "Файл": f"../content/enemies/{path.name}",
         "markdown": text,
     }
 
@@ -67,9 +66,8 @@ def main():
             )
 
     if not enemies:
-        raise SystemExit("В папке enemies не найдено ни одного корректного .md.")
+        raise SystemExit("В content/enemies не найдено ни одного корректного .md.")
 
-    # 1. Обновляем enemies.csv
     with CSV_FILE.open("w", encoding="utf-8-sig", newline="") as file:
         writer = csv.writer(file, delimiter=";")
         writer.writerow(["Название", "Хиты всего", "Файл"])
@@ -81,13 +79,11 @@ def main():
                 enemy["Файл"],
             ])
 
-    # 2. Готовим резервный CSV прямо для enemies.js
     fallback_csv = "Название;Хиты всего;Файл\n" + "\n".join(
         f"{enemy['Название']};{enemy['Хиты всего']};{enemy['Файл']}"
         for enemy in enemies
     )
 
-    # 3. Готовим содержимое всех MD прямо для enemies.js
     markdown_fallback = {
         enemy["Файл"]: enemy["markdown"]
         for enemy in enemies
@@ -103,14 +99,10 @@ def main():
 
     if not FALLBACK_CSV_RE.search(js):
         raise SystemExit(
-            "В enemies.js не найден блок const FALLBACK_ENEMIES_CSV = `...`;"
+            "В assets/js/enemies.js не найден FALLBACK_ENEMIES_CSV."
         )
 
-    js = FALLBACK_CSV_RE.sub(
-        lambda _: new_csv_block,
-        js,
-        count=1
-    )
+    js = FALLBACK_CSV_RE.sub(lambda _: new_csv_block, js, count=1)
 
     new_md_block = (
         "window.ENEMY_MD_FALLBACK = "
@@ -119,13 +111,8 @@ def main():
     )
 
     if MD_FALLBACK_RE.search(js):
-        js = MD_FALLBACK_RE.sub(
-            lambda _: new_md_block,
-            js,
-            count=1
-        )
+        js = MD_FALLBACK_RE.sub(lambda _: new_md_block, js, count=1)
     else:
-        # Вставляем сразу после FALLBACK_ENEMIES_CSV.
         js = js.replace(
             new_csv_block,
             new_csv_block + "\n\n" + new_md_block,
@@ -134,28 +121,28 @@ def main():
 
     JS_FILE.write_text(js, encoding="utf-8")
 
-    # 4. Старый отдельный enemy-details.js больше не нужен.
-    # Удаляем его подключение из tool-3.html, если оно есть.
+    for old_file in (
+        ROOT_DIR / "enemy-details.js",
+        ROOT_DIR / "assets" / "js" / "enemy-details.js",
+    ):
+        if old_file.exists():
+            old_file.unlink()
+            print(f"[DELETE] {old_file.relative_to(ROOT_DIR)}")
+
     if HTML_FILE.exists():
         html = HTML_FILE.read_text(encoding="utf-8")
         html = re.sub(
-            r'\s*<script\s+src=["\']enemy-details\.js["\']\s*></script>\s*',
+            r'\s*<script\s+src=["\'][^"\']*enemy-details\.js["\']\s*></script>\s*',
             "\n",
             html
         )
         HTML_FILE.write_text(html, encoding="utf-8")
 
-    # Сам старый файл тоже можно удалить.
-    if OLD_DETAILS_FILE.exists():
-        OLD_DETAILS_FILE.unlink()
-        print("[DELETE] enemy-details.js больше не нужен")
-
     print()
     print("Готово.")
     print(f"Врагов: {len(enemies)}")
-    print(f"Обновлён: {CSV_FILE.name}")
-    print(f"Обновлён: {JS_FILE.name}")
-    print("Карточки MD встроены в enemies.js для работы через file://")
+    print(f"Обновлён: {CSV_FILE.relative_to(ROOT_DIR)}")
+    print(f"Обновлён: {JS_FILE.relative_to(ROOT_DIR)}")
 
 
 if __name__ == "__main__":

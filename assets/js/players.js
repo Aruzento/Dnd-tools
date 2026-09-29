@@ -101,7 +101,7 @@ async function loadPlayers() {
   let players;
 
   try {
-    const response = await fetch("players.csv", { cache: "no-store" });
+    const response = await fetch("../data/players.csv", { cache: "no-store" });
     if (!response.ok) throw new Error("Не удалось загрузить players.csv");
     players = parsePlayersCsv(await response.text());
   } catch (error) {
