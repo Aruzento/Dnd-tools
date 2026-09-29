@@ -1,0 +1,78 @@
+/* Tool 3: compact combat outcome evaluator */
+.combat-evaluation {
+  margin: -12px 0 34px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+}
+
+.combat-evaluation-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+
+.combat-evaluation-title h2 {
+  margin: 0;
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.combat-evaluation-title span {
+  color: var(--muted-2);
+  font-size: 11px;
+}
+
+.combat-outcomes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.combat-outcome {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 48px;
+  padding: 10px 12px;
+  border: 1px solid var(--border-soft);
+  border-radius: 10px;
+  background: var(--surface-deep);
+}
+
+.combat-outcome span {
+  min-width: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.25;
+}
+
+.combat-outcome strong {
+  flex: 0 0 auto;
+  color: var(--text);
+  font-size: 18px;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+
+.combat-evaluation.is-calculating .combat-outcome strong {
+  opacity: .45;
+}
+
+@media (max-width: 620px) {
+  .combat-evaluation-title {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .combat-outcomes {
+    grid-template-columns: 1fr;
+  }
+}

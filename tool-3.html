@@ -6,6 +6,7 @@
   <meta name="theme-color" content="#212121">
   <title>Враги — Tools</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="combat-evaluator.css">
 </head>
 <body>
 <header class="site-header">
@@ -34,6 +35,28 @@
     </div>
     <div class="players-grid" id="players-grid"></div>
     <p class="form-error players-error" id="players-error" role="alert" aria-live="polite"></p>
+  </section>
+
+  <section class="combat-evaluation" id="combat-evaluation" aria-labelledby="combat-evaluation-title">
+    <div class="combat-evaluation-title">
+      <h2 id="combat-evaluation-title">Вероятность исхода</h2>
+      <span id="combat-evaluation-state">Добавьте врагов</span>
+    </div>
+
+    <div class="combat-outcomes">
+      <div class="combat-outcome">
+        <span>Удачный исход</span>
+        <strong id="combat-success">—</strong>
+      </div>
+      <div class="combat-outcome">
+        <span>Тяжёлый исход</span>
+        <strong id="combat-hard">—</strong>
+      </div>
+      <div class="combat-outcome">
+        <span>Неудачный исход</span>
+        <strong id="combat-fail">—</strong>
+      </div>
+    </div>
   </section>
 
   <section class="enemy-section-heading">
@@ -94,5 +117,6 @@
 
 <script src="players.js"></script>
 <script src="enemies.js"></script>
+<script src="combat-evaluator.js"></script>
 </body>
 </html>
