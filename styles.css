@@ -994,3 +994,91 @@ h2 {
     text-align: left;
   }
 }
+
+/* BEGIN enemy icon actions */
+.enemy-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 7px;
+}
+
+.enemy-icon-button,
+.enemy-expand.enemy-icon-button,
+.enemy-delete.enemy-icon-button {
+  display: inline-flex;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  color: var(--muted);
+  background: transparent;
+  cursor: pointer;
+  transition:
+    color 120ms ease,
+    background 120ms ease,
+    border-color 120ms ease,
+    transform 120ms ease;
+}
+
+.enemy-icon-button:hover,
+.enemy-expand.enemy-icon-button:hover {
+  color: var(--text);
+  border-color: #606060;
+  background: rgba(255,255,255,.045);
+}
+
+.enemy-icon-button:active {
+  transform: scale(.94);
+}
+
+.enemy-delete.enemy-delete-icon-button {
+  color: #ff7272;
+  border-color: rgba(255, 114, 114, .28);
+}
+
+.enemy-delete.enemy-delete-icon-button:hover {
+  color: #ff8b8b;
+  border-color: rgba(255, 114, 114, .55);
+  background: rgba(255, 90, 90, .08);
+}
+
+.enemy-action-icon {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+.enemy-expand-icon {
+  transition: transform 140ms ease;
+}
+
+.enemy-expand[aria-expanded="true"] .enemy-expand-icon {
+  transform: rotate(180deg);
+}
+
+@media (max-width: 760px) {
+  .enemy-actions {
+    display: flex;
+    grid-column: 1 / -1;
+    justify-content: flex-end;
+  }
+
+  .enemy-expand.enemy-icon-button,
+  .enemy-delete.enemy-icon-button,
+  .enemy-duplicate.enemy-icon-button {
+    width: 42px;
+    height: 42px;
+    flex-basis: 42px;
+  }
+}
+/* END enemy icon actions */

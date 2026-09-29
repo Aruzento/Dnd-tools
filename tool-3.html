@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#212121">
-  <title>Враги — Tools</title>
+  <title>Калькулятор — Tools</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="combat-evaluator.css">
 </head>
@@ -15,7 +15,7 @@
     <nav class="tool-nav" aria-label="Инструменты">
       <a class="nav-link" href="tool-1.html">Генератор лута</a>
       <a class="nav-link" href="tool-2.html">Конвертер денег</a>
-      <a class="nav-link active" href="tool-3.html" aria-current="page">Враги</a>
+      <a class="nav-link active" href="tool-3.html" aria-current="page">Калькулятор</a>
       <a class="nav-link" href="tool-4.html">Персонажи</a>
       <a class="nav-link" href="tool-5.html">Магазин</a>
     </nav>
@@ -25,7 +25,7 @@
 <main class="page-shell enemies-shell">
   <section class="page-heading">
     <p class="kicker">Инструмент 3</p>
-    <h1>Враги</h1>
+    <h1>Калькулятор</h1>
     <p class="subtitle">Следите за состоянием группы и противников во время боя.</p>
   </section>
 
@@ -102,8 +102,25 @@
       </div>
 
       <div class="enemy-actions">
-        <button class="enemy-expand" type="button" aria-expanded="false">Расширить</button>
-        <button class="enemy-delete" type="button" aria-label="Удалить врага">Удалить</button>
+        <button class="enemy-expand enemy-icon-button" type="button" aria-expanded="false" aria-label="Расширить" title="Расширить">
+          <svg class="enemy-action-icon enemy-expand-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="m6 9 6 6 6-6"></path>
+          </svg>
+        </button>
+
+        <button class="enemy-duplicate enemy-icon-button" type="button" aria-label="Дублировать" title="Дублировать">
+          <svg class="enemy-action-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
+            <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path>
+          </svg>
+        </button>
+
+        <button class="enemy-delete enemy-icon-button enemy-delete-icon-button" type="button" aria-label="Удалить врага" title="Удалить">
+          <svg class="enemy-action-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M18 6 6 18"></path>
+            <path d="m6 6 12 12"></path>
+          </svg>
+        </button>
       </div>
     </div>
 

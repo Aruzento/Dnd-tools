@@ -214,14 +214,21 @@ function applyEnemy(entry, enemyIndex) {
   }
 }
 
-function createEnemyRow() {
-  if (!enemies.length) return;
+function createEnemyRow(initialEnemyIndex = 0, initialHp = null, insertAfterEntry = null) {
+  if (!enemies.length) return null;
+
+  const safeEnemyIndex = Number.isInteger(initialEnemyIndex)
+    && initialEnemyIndex >= 0
+    && initialEnemyIndex < enemies.length
+      ? initialEnemyIndex
+      : 0;
 
   const fragment = rowTemplate.content.cloneNode(true);
   const entry = fragment.querySelector(".enemy-entry");
   const nameSelect = entry.querySelector(".enemy-name");
   const currentHpInput = entry.querySelector(".enemy-current-hp");
   const expandButton = entry.querySelector(".enemy-expand");
+  const duplicateButton = entry.querySelector(".enemy-duplicate");
   const deleteButton = entry.querySelector(".enemy-delete");
   const details = entry.querySelector(".enemy-details");
 
@@ -231,6 +238,8 @@ function createEnemyRow() {
     option.textContent = enemy.name;
     nameSelect.appendChild(option);
   });
+
+  nameSelect.value = String(safeEnemyIndex);
 
   nameSelect.addEventListener("change", () => {
     applyEnemy(entry, Number(nameSelect.value));
@@ -261,11 +270,20 @@ function createEnemyRow() {
     const willOpen = details.hidden;
     details.hidden = !willOpen;
     expandButton.setAttribute("aria-expanded", String(willOpen));
-    expandButton.textContent = willOpen ? "Свернуть" : "Расширить";
+    expandButton.setAttribute("aria-label", willOpen ? "Свернуть" : "Расширить");
+    expandButton.title = willOpen ? "Свернуть" : "Расширить";
 
     if (willOpen) {
       await renderEnemyDetails(entry);
     }
+  });
+
+  duplicateButton.addEventListener("click", () => {
+    createEnemyRow(
+      Number(nameSelect.value),
+      currentHpInput.value,
+      entry
+    );
   });
 
   deleteButton.addEventListener("click", () => {
@@ -273,12 +291,31 @@ function createEnemyRow() {
     updateEmptyState();
   });
 
-  enemyList.appendChild(fragment);
-  applyEnemy(entry, 0);
+  if (insertAfterEntry && insertAfterEntry.parentElement === enemyList) {
+    insertAfterEntry.after(fragment);
+  } else {
+    enemyList.appendChild(fragment);
+  }
+
+  applyEnemy(entry, safeEnemyIndex);
+
+  if (initialHp !== null && initialHp !== "") {
+    let hp = Number(initialHp);
+    const maxHp = Number(currentHpInput.max);
+
+    if (Number.isFinite(hp)) {
+      hp = Math.max(0, hp);
+      if (Number.isFinite(maxHp)) hp = Math.min(maxHp, hp);
+      currentHpInput.value = String(hp);
+      setDeadState(entry);
+    }
+  }
+
   updateEmptyState();
+  return entry;
 }
 
-addEnemyButton.addEventListener("click", createEnemyRow);
+addEnemyButton.addEventListener("click", () => createEnemyRow());
 
 loadEnemies().then(() => {
   updateEmptyState();
