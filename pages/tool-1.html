@@ -6,6 +6,7 @@
   <meta name="theme-color" content="#212121">
   <title>Генератор лута — Tools</title>
   <link rel="stylesheet" href="../assets/css/styles.css">
+  <link rel="stylesheet" href="../assets/css/loot-generator.css">
 </head>
 <body>
 <header class="site-header">
@@ -13,10 +14,10 @@
     <a class="brand" href="tool-1.html" aria-label="Tools — главная">TOOLS</a>
     <nav class="tool-nav" aria-label="Инструменты">
       <a class="nav-link active" href="tool-1.html" aria-current="page">Генератор лута</a>
-<a class="nav-link" href="tool-2.html">Конвертер денег</a>
-<a class="nav-link" href="tool-3.html">Калькулятор</a>
-<a class="nav-link" href="tool-4.html">Персонажи</a>
-<a class="nav-link" href="tool-5.html">Магазин</a>
+      <a class="nav-link" href="tool-2.html">Конвертер денег</a>
+      <a class="nav-link" href="tool-3.html">Калькулятор</a>
+      <a class="nav-link" href="tool-4.html">Персонажи</a>
+      <a class="nav-link" href="tool-5.html">Магазин</a>
     </nav>
   </div>
 </header>
@@ -25,7 +26,7 @@
   <section class="page-heading">
     <p class="kicker">Инструмент 1</p>
     <h1>Генератор лута</h1>
-    <p class="subtitle">Задайте диапазон количества предметов и максимальную стоимость всей находки.</p>
+    <p class="subtitle">Задайте количество предметов, диапазон общей стоимости и категории, которые могут попасть в лут.</p>
   </section>
 
   <div class="tool-grid">
@@ -41,13 +42,35 @@
         </label>
       </div>
 
-      <label class="field">
-        <span>Максимальная стоимость всего лута</span>
-        <div class="input-wrap">
-          <input id="loot-budget" type="number" min="1" step="1" value="300" inputmode="numeric" required>
-          <span class="suffix">ММ</span>
+      <div class="field-group two-fields">
+        <label class="field">
+          <span>Стоимость от</span>
+          <div class="input-wrap">
+            <input id="loot-budget-min" type="number" min="0" step="1" value="0" inputmode="numeric" required>
+            <span class="suffix">ММ</span>
+          </div>
+        </label>
+        <label class="field">
+          <span>Стоимость до</span>
+          <div class="input-wrap">
+            <input id="loot-budget-max" type="number" min="0" step="1" value="300" inputmode="numeric" required>
+            <span class="suffix">ММ</span>
+          </div>
+        </label>
+      </div>
+
+      <div class="loot-category-block">
+        <div class="loot-category-header">
+          <span>Категории лута</span>
+          <div class="loot-category-actions">
+            <button id="loot-categories-all" type="button">Все</button>
+            <button id="loot-categories-none" type="button">Снять</button>
+          </div>
         </div>
-      </label>
+
+        <div class="loot-category-list" id="loot-categories" aria-label="Категории лута"></div>
+        <div class="loot-category-summary" id="loot-category-summary"></div>
+      </div>
 
       <button class="generate-button" type="submit">Получить список</button>
       <p class="form-error" id="form-error" role="alert" aria-live="polite"></p>
