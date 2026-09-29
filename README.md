@@ -42,13 +42,11 @@ Dnd-tools/
 ├─ content/
 │  ├─ characters/
 │  └─ enemies/
-├─ scripts/
-│  ├─ update_loot.py
-│  ├─ update_players.py
-│  ├─ update_enemies.py
-│  └─ organize_project.py
-└─ docs/
-   └─ archive/
+└─ scripts/
+   ├─ update_loot.py
+   ├─ update_players.py
+   └─ update_enemies.py
+
 ```
 
 ## Запуск
