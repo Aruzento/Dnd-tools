@@ -7,14 +7,27 @@ const resultMeta = document.getElementById("result-meta");
 const formError = document.getElementById("form-error");
 const copyButton = document.getElementById("copy-button");
 
+// Нормализуем базу, чтобы генератор переживал расширение схемы
+// и продолжал работать с name/price, не завися от новых полей.
+const lootItems = (Array.isArray(lootTable) ? lootTable : [])
+  .map((item) => ({
+    name: String(item.name ?? item["Предмет"] ?? "").trim(),
+    effect: String(item.effect ?? item["Эффект"] ?? ""),
+    description: String(item.description ?? item["Описание"] ?? ""),
+    price: Number(item.price ?? item["Стоимость"]),
+    rarity: String(item.rarity ?? item["Редкость"] ?? ""),
+    category: String(item.category ?? item["Категория"] ?? "")
+  }))
+  .filter((item) => item.name && Number.isFinite(item.price) && item.price >= 0);
+
 function randomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 function generateLoot(count, budget) {
-  if (count > lootTable.length) return null;
+  if (count > lootItems.length) return null;
 
-  let available = lootTable.map((item, itemIndex) => ({ item, itemIndex }));
+  let available = lootItems.map((item, itemIndex) => ({ item, itemIndex }));
   const minimumTotal = [...available]
     .sort((a, b) => a.item.price - b.item.price)
     .slice(0, count)
@@ -62,6 +75,10 @@ form.addEventListener("submit", (event) => {
   const max = Number(maxInput.value);
   const budget = Number(budgetInput.value);
 
+  if (lootItems.length === 0) {
+    formError.textContent = "База предметов пуста или повреждена. Проверьте loot.csv и запустите update_loot.py.";
+    return;
+  }
   if (!Number.isInteger(min) || !Number.isInteger(max) || min < 1 || max < 1) {
     formError.textContent = "Количество предметов должно быть целым числом от 1.";
     return;
