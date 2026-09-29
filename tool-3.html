@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#212121">
+  <title>Враги — Tools</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="tool-1.html" aria-label="Tools — главная">TOOLS</a>
+    <nav class="tool-nav" aria-label="Инструменты">
+      <a class="nav-link" href="tool-1.html">Генератор лута</a>
+      <a class="nav-link" href="tool-2.html">Конвертер денег</a>
+      <a class="nav-link active" href="tool-3.html" aria-current="page">Враги</a>
+      <a class="nav-link" href="tool-4.html">Персонажи</a>
+      <a class="nav-link" href="tool-5.html">Инструмент 5</a>
+    </nav>
+  </div>
+</header>
+
+<main class="page-shell enemies-shell">
+  <section class="page-heading">
+    <p class="kicker">Инструмент 3</p>
+    <h1>Враги</h1>
+    <p class="subtitle">Следите за состоянием группы и противников во время боя.</p>
+  </section>
+
+  <section class="players-section" aria-labelledby="players-title">
+    <div class="combat-section-title">
+      <h2 id="players-title">Игроки</h2>
+    </div>
+    <div class="players-grid" id="players-grid"></div>
+    <p class="form-error players-error" id="players-error" role="alert" aria-live="polite"></p>
+  </section>
+
+  <section class="enemy-section-heading">
+    <h2>Враги</h2>
+    <button class="generate-button add-enemy-button" id="add-enemy" type="button">Добавить врага</button>
+  </section>
+
+  <section class="enemies-panel" aria-label="Список врагов">
+    <div class="enemy-table-head" aria-hidden="true">
+      <span>Название</span>
+      <span>Хиты сейчас</span>
+      <span>Хиты всего</span>
+      <span>Действия</span>
+    </div>
+
+    <div class="enemy-list" id="enemy-list"></div>
+
+    <div class="enemy-empty" id="enemy-empty">
+      <p>Список пуст.</p>
+      <span>Добавьте первого врага.</span>
+    </div>
+
+    <p class="form-error enemies-error" id="enemies-error" role="alert" aria-live="polite"></p>
+  </section>
+</main>
+
+<template id="enemy-row-template">
+  <div class="enemy-entry">
+    <div class="enemy-row">
+      <label class="enemy-cell enemy-name-cell">
+        <span class="mobile-label">Название</span>
+        <select class="enemy-name" aria-label="Название врага"></select>
+      </label>
+
+      <label class="enemy-cell">
+        <span class="mobile-label">Хиты сейчас</span>
+        <input class="enemy-current-hp" type="number" min="0" step="1" inputmode="numeric" aria-label="Хиты сейчас">
+      </label>
+
+      <div class="enemy-cell enemy-total-cell">
+        <span class="mobile-label">Хиты всего</span>
+        <span class="enemy-total-hp" aria-label="Хиты всего"></span>
+      </div>
+
+      <div class="enemy-actions">
+        <button class="enemy-expand" type="button" aria-expanded="false">Расширить</button>
+        <button class="enemy-delete" type="button" aria-label="Удалить врага">Удалить</button>
+      </div>
+    </div>
+
+    <div class="enemy-details" hidden>
+      <div class="enemy-details-scroll">
+        <div class="enemy-details-content"></div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script src="players.js"></script>
+<script src="enemies.js"></script>
+</body>
+</html>

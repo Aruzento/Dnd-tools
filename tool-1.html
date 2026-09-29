@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#212121">
+  <title>Генератор лута — Tools</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="tool-1.html" aria-label="Tools — главная">TOOLS</a>
+    <nav class="tool-nav" aria-label="Инструменты">
+      <a class="nav-link active" href="tool-1.html" aria-current="page">Генератор лута</a>
+<a class="nav-link" href="tool-2.html">Конвертер денег</a>
+<a class="nav-link" href="tool-3.html">Враги</a>
+<a class="nav-link" href="tool-4.html">Персонажи</a>
+<a class="nav-link" href="tool-5.html">Инструмент 5</a>
+    </nav>
+  </div>
+</header>
+
+<main class="page-shell">
+  <section class="page-heading">
+    <p class="kicker">Инструмент 1</p>
+    <h1>Генератор лута</h1>
+    <p class="subtitle">Задайте диапазон количества предметов и максимальную стоимость всей находки.</p>
+  </section>
+
+  <div class="tool-grid">
+    <form class="settings-panel" id="loot-form">
+      <div class="field-group two-fields">
+        <label class="field">
+          <span>Предметов от</span>
+          <input id="loot-min" type="number" min="1" max="50" step="1" value="2" inputmode="numeric" required>
+        </label>
+        <label class="field">
+          <span>Предметов до</span>
+          <input id="loot-max" type="number" min="1" max="50" step="1" value="5" inputmode="numeric" required>
+        </label>
+      </div>
+
+      <label class="field">
+        <span>Максимальная стоимость всего лута</span>
+        <div class="input-wrap">
+          <input id="loot-budget" type="number" min="1" step="1" value="300" inputmode="numeric" required>
+          <span class="suffix">ММ</span>
+        </div>
+      </label>
+
+      <button class="generate-button" type="submit">Получить список</button>
+      <p class="form-error" id="form-error" role="alert" aria-live="polite"></p>
+    </form>
+
+    <section class="result-panel" aria-labelledby="result-title">
+      <div class="result-topline">
+        <div>
+          <p class="kicker">Результат</p>
+          <h2 id="result-title">Список предметов</h2>
+        </div>
+        <button class="copy-button" id="copy-button" type="button" disabled>Копировать</button>
+      </div>
+
+      <textarea id="loot-result" class="result-output" readonly spellcheck="false" aria-label="Сгенерированный список лута" placeholder="Здесь появится сгенерированный список..."></textarea>
+      <div class="result-meta" id="result-meta" aria-live="polite">Список ещё не создан</div>
+    </section>
+  </div>
+</main>
+
+<script src="loot-data.js"></script>
+<script src="loot.js"></script>
+</body>
+</html>

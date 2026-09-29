@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#212121">
+  <title>Конвертер денег — Tools</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="tool-1.html" aria-label="Tools — главная">TOOLS</a>
+    <nav class="tool-nav" aria-label="Инструменты">
+      <a class="nav-link" href="tool-1.html">Генератор лута</a>
+      <a class="nav-link active" href="tool-2.html" aria-current="page">Конвертер денег</a>
+      <a class="nav-link" href="tool-3.html">Враги</a>
+      <a class="nav-link" href="tool-4.html">Персонажи</a>
+      <a class="nav-link" href="tool-5.html">Инструмент 5</a>
+    </nav>
+  </div>
+</header>
+
+<main class="page-shell converter-shell">
+  <section class="page-heading">
+    <p class="kicker">Инструмент 2</p>
+    <h1>Конвертер денег</h1>
+  </section>
+
+  <form class="converter-panel" id="money-form">
+    <p class="conversion-rule">DND: 1 ЗМ = 10 СМ = 100 ММ</p>
+
+    <label class="converter-row" for="dnd-copper">
+      <span>Введите деньги в ММ:</span>
+      <input id="dnd-copper" type="number" min="0" step="any" inputmode="decimal" autocomplete="off" aria-label="Медные монеты DND">
+    </label>
+
+    <button class="generate-button converter-button" type="submit">Конвертировать</button>
+
+    <label class="converter-row" for="etara-copper">
+      <span>Медных монет Этара:</span>
+      <input id="etara-copper" type="number" min="0" step="any" inputmode="decimal" autocomplete="off" aria-label="Медные монеты Этара">
+    </label>
+
+    <p class="form-error converter-error" id="money-error" role="alert" aria-live="polite"></p>
+  </form>
+</main>
+
+<script src="money.js"></script>
+</body>
+</html>
