@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#212121">
-  <title>Инструмент 5 — Tools</title>
+  <title>Магазин — Tools</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -13,20 +13,51 @@
     <a class="brand" href="tool-1.html" aria-label="Tools — главная">TOOLS</a>
     <nav class="tool-nav" aria-label="Инструменты">
       <a class="nav-link" href="tool-1.html">Генератор лута</a>
-<a class="nav-link" href="tool-2.html">Конвертер денег</a>
-<a class="nav-link" href="tool-3.html">Враги</a>
-<a class="nav-link" href="tool-4.html">Персонажи</a>
-<a class="nav-link active" href="tool-5.html" aria-current="page">Инструмент 5</a>
+      <a class="nav-link" href="tool-2.html">Конвертер денег</a>
+      <a class="nav-link" href="tool-3.html">Враги</a>
+      <a class="nav-link" href="tool-4.html">Персонажи</a>
+      <a class="nav-link active" href="tool-5.html" aria-current="page">Магазин</a>
     </nav>
   </div>
 </header>
-<main class="page-shell empty-page">
-  <section class="empty-state">
-    <div class="empty-number">05</div>
-    <p class="kicker">Будущий инструмент</p>
-    <h1>Инструмент 5</h1>
-    <p class="subtitle">Эта страница зарезервирована под следующий инструмент.</p>
+
+<main class="page-shell shop-shell">
+  <section class="page-heading shop-heading">
+    <div>
+      <p class="kicker">Инструмент 5</p>
+      <h1>Магазин</h1>
+      <p class="subtitle">Выберите категорию и сгенерируйте случайный ассортимент магазина.</p>
+    </div>
   </section>
+
+  <section class="shop-controls" aria-label="Настройки магазина">
+    <label class="field shop-category-field">
+      <span>Категория магазина</span>
+      <select id="shop-category" class="shop-select" aria-label="Категория магазина"></select>
+    </label>
+    <button class="generate-button shop-refresh" id="shop-refresh" type="button">Обновить магазин</button>
+  </section>
+
+  <div class="shop-summary" id="shop-summary" aria-live="polite"></div>
+  <p class="form-error shop-error" id="shop-error" role="alert" aria-live="polite"></p>
+
+  <section class="shop-list" id="shop-list" aria-label="Ассортимент магазина"></section>
 </main>
+
+<template id="shop-item-template">
+  <article class="shop-item">
+    <div class="shop-item-main">
+      <h2 class="shop-item-name"></h2>
+      <p class="shop-item-description"></p>
+    </div>
+    <div class="shop-item-price-wrap">
+      <span>Цена продажи</span>
+      <strong class="shop-item-price"></strong>
+    </div>
+  </article>
+</template>
+
+<script src="loot-data.js"></script>
+<script src="shop.js"></script>
 </body>
 </html>
