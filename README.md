@@ -37,6 +37,7 @@ Dnd-tools/
 ├─ data/
 │  ├─ loot.csv
 │  ├─ loot-data.js
+│  ├─ characters-data.js
 │  ├─ players.csv
 │  └─ enemies.csv
 ├─ content/
@@ -56,7 +57,7 @@ Dnd-tools/
 Перед открытием сайта он:
 
 1. собирает `data/enemies.csv` и fallback в `assets/js/enemies.js` из `content/enemies/*.md`;
-2. собирает `data/players.csv` и fallback в `assets/js/players.js` из `content/characters/*.md`;
+2. собирает `data/players.csv`, fallback в `assets/js/players.js` и `data/characters-data.js` из `content/characters/*.md`;
 3. собирает `data/loot-data.js` из `data/loot.csv`;
 4. открывает `index.html`.
 
@@ -95,3 +96,22 @@ Dnd-tools/
 ## Калькулятор боя
 
 Инструмент 3 использует текущие хиты игроков и врагов, КД и боевые профили. Вероятности пересчитываются локально в браузере; интернет для расчёта не нужен.
+
+## Замена игроков
+
+`content/characters/*.md` — единственный редактируемый источник данных о партии.
+
+Чтобы заменить группу:
+
+1. замените `.md`-карточки в `content/characters/`;
+2. у каждой карточки должны быть заголовок `# ...`, `**Хиты:** число` и `**КД:** число`;
+3. для точной оценки боя добавьте скрытый блок `DND-TOOLS-COMBAT` по образцу `content/CHARACTER_TEMPLATE.example.md`;
+4. запустите `Update and launch.bat`.
+
+`update_players.py` сначала проверяет все карточки. Если хотя бы одна сломана, старые сгенерированные данные не перезаписываются.
+
+Из Markdown автоматически обновляются:
+
+- `data/players.csv`;
+- fallback в `assets/js/players.js`;
+- `data/characters-data.js` для страницы «Персонажи» и боевого калькулятора.

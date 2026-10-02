@@ -17,32 +17,7 @@
     return;
   }
 
-  const PLAYER_PROFILES = {
-    "Лазарь": {
-      attackBonus: 5, damage: 5.5, attacks: 1, damageType: "психический",
-      heal: 6, healMode: "bonus"
-    },
-    "Азраэль": {
-      attackBonus: 5, damage: 14.5, attacks: 1, damageType: "колющий",
-      firstRoundAdvantage: true, resist: ["огонь"]
-    },
-    "Фредо": {
-      attackBonus: 5, damage: 10.5, attacks: 1, damageType: "огонь",
-      heal: 8, healMode: "action", resist: ["огонь"]
-    },
-    "Марфа": {
-      attackBonus: 5, damage: 8.5, attacks: 1, damageType: "силовое поле",
-      relentless: true
-    },
-    "Ренкай": {
-      attackBonus: 6, damage: 15, attacks: 1, damageType: "колющий",
-      actionSurge: true, secondWind: 8.5, physicalImmunity: true
-    },
-    "Громм": {
-      attackBonus: 5, damage: 8.5, attacks: 2, damageType: "рубящий",
-      advantage: true, physicalResistance: true, resist: ["яд"]
-    }
-  };
+  const PLAYER_PROFILES = window.PLAYER_COMBAT_PROFILES || {};
 
   const CR_DPR = {
     "0": 1, "0.125": 2.5, "0.25": 4.5, "0.5": 7,
